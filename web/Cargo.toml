@@ -28,6 +28,8 @@ validator = { workspace = true }
 url = { workspace = true }
 dotenvy = { workspace = true }
 async-trait = { workspace = true }
+reqwest = { workspace = true }
+oauth2 = { workspace = true }
 
 # tracing
 tracing = { workspace = true }

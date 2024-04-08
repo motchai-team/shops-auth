@@ -18,7 +18,9 @@ fn auth_router() -> Router<AppState> {
     Router::new().nest(
         "/auth",
         Router::new()
-            .route("/login", routing::post(auth_controller::login))
+            .route("/login/google", routing::post(auth_controller::login))
+            .route("/login/google/callback", routing::post(auth_controller::login))
+
             .route("/logout", routing::post(auth_controller::logout))
             .route("/register", routing::post(auth_controller::register))
             .route(
