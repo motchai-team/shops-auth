@@ -20,11 +20,11 @@ export class AuthController {
     }
 
     @UseGuards(GoogleOauthGuard)
-    @Get('google')
+    @Get('login/google')
     googleAuth() {}
 
     @UseGuards(GoogleOauthGuard)
-    @Get('google/callback')
+    @Get('login/google/callback')
     googleAuthCallback(@Req() req: Request, @Res() res: Response) {
         res.status(200).json(req.user);
     }
