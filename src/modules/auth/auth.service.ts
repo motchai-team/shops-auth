@@ -57,7 +57,6 @@ export class AuthService {
 
             return this.generateTokens({ accountId, email, username });
         } catch (e) {
-            console.log(e);
             throw new HttpException(`error ${e}`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
