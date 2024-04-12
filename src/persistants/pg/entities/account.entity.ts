@@ -10,20 +10,26 @@ export class Account extends Base {
     name: string;
 
     @Column()
-    providerUsername: string;
+    provider_username: string;
 
     @Column()
     provider: string;
 
     @Column()
-    providerId: string;
+    provider_id: string;
 
-    @Column()
-    userName: string;
+    @Column({
+        nullable: true
+    })
+    username: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     email: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     gender: string;
 }

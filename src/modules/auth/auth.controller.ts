@@ -19,9 +19,10 @@ export class AuthController {
 
     @UseGuards(GoogleOauthGuard)
     @Get('login/google/callback')
-    googleAuthCallback(@Req() req: Request, @Res() res: Response) {
+    async googleAuthCallback(@Req() req: Request, @Res() res: Response) {
+        const token = await this.authService.googleLoginCallback(req.user);
         res.status(200).json({
-            data: this.authService.googleLoginCallback(req.user),
+            data: token,
             message: 'success'
         });
     }

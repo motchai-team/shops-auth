@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -34,30 +34,35 @@ export class AuthService {
     }
 
     async googleLoginCallback(userCallback: any): Promise<any> {
-        const { provider, providerId, name, username } = userCallback;
-        let account = await this.accountRepo.findOne({
-            where: {
-                provider,
-                name,
-                providerUsername: username
-            }
-        });
-
-        if (!account) {
-            account = this.accountRepo.create({
-                providerId,
-                provider,
-                name,
-                email: username,
-                providerUsername: username
+        try {
+            const { provider, providerId, name, username } = userCallback;
+            let account = await this.accountRepo.findOne({
+                where: {
+                    provider,
+                    name,
+                    provider_username: username
+                }
             });
 
-            await account.save();
+            if (!account) {
+                account = this.accountRepo.create({
+                    provider_id: providerId,
+                    provider,
+                    name,
+                    email: username,
+                    provider_username: username
+                });
+
+                await account.save();
+            }
+
+            const { id: accountId, email } = account;
+
+            return this.generateTokens({ accountId, email, username });
+        } catch (e) {
+            console.log(e);
+            throw new HttpException(`error ${e}`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        const { id: accountId, email } = account;
-
-        return this.generateTokens({ accountId, email, username });
     }
 
     public generateTokens(data: { accountId: string; email: string; username: string }) {
