@@ -55,13 +55,13 @@ export class AuthService {
 
             const { id: accountId, email } = account;
 
-            return this.generateTokens({ accountId, email, username });
+            return this.generateTokens({ accountId, email });
         } catch (e) {
             throw new HttpException(`error ${e}`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public generateTokens(data: { accountId: string; email: string; username: string }) {
+    public generateTokens(data: { accountId: string; email: string }) {
         return {
             access_token: this.jwtService.sign(data)
         };
