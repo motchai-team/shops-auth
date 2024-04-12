@@ -5,6 +5,8 @@ export type User = any;
 
 @Injectable()
 export class UsersService {
+    constructor() {}
+
     private readonly users = [
         {
             userId: 1,
@@ -20,8 +22,7 @@ export class UsersService {
             userId: 3,
             username: 'Tuan',
             password: '123'
-        },
-
+        }
     ];
 
     async findOne(username: string): Promise<User | undefined> {

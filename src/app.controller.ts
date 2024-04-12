@@ -3,7 +3,7 @@ import { Controller, Get } from '@nestjs/common';
 @Controller()
 export class AppController {
     @Get('/ping')
-    async login() {
+    async ping() {
         return 'pong';
     }
 }
