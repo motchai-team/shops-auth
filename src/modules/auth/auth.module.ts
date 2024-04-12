@@ -19,7 +19,7 @@ import entities from 'src/persistants/pg/entities';
 
             useFactory: (configService: ConfigService) => ({
                 secret: configService.get<string>('JWT_SECRET'),
-                signOptions: { expiresIn: '60s' }
+                signOptions: { expiresIn: Number(configService.get<string>('JWT_ACCESS_EXPIRES_IN')) }
             })
         }),
         TypeOrmModule.forFeature([...entities])

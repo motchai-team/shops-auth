@@ -4,15 +4,12 @@ import { UsersService } from '../users/users.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Account } from 'src/persistants/pg/entities/account.entity';
-import { ConfigService } from '@nestjs/config';
-import jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
     constructor(
         private usersService: UsersService,
         private jwtService: JwtService,
-        private configService: ConfigService,
 
         @InjectRepository(Account)
         private accountRepo: Repository<Account>
@@ -66,11 +63,8 @@ export class AuthService {
     }
 
     public generateTokens(data: { accountId: string; email: string; username: string }) {
-        const jwtSecret = this.configService.get<string>('JWT_SECRET');
-        const accessExpiresIn = Number(this.configService.get<string>('JWT_ACCESS_EXPIRES_IN'));
-
         return {
-            access_token: jwt.sign(data, jwtSecret, { expiresIn: accessExpiresIn })
+            access_token: this.jwtService.sign(data)
         };
     }
 }
