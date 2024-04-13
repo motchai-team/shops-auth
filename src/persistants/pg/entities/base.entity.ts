@@ -2,19 +2,19 @@ import { BaseEntity, BeforeInsert, BeforeUpdate, Column } from 'typeorm';
 
 export abstract class Base extends BaseEntity {
     @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-    createdAt: Date;
+    created_at: Date;
 
     @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-    updatedAt: Date;
+    updated_at: Date;
 
     @BeforeInsert()
     updateTimestampsOnInsert() {
-        this.createdAt = new Date();
-        this.updatedAt = new Date();
+        this.created_at = new Date();
+        this.updated_at = new Date();
     }
 
     @BeforeUpdate()
     updateTimestampsOnUpdate() {
-        this.updatedAt = new Date();
+        this.updated_at = new Date();
     }
 }
