@@ -40,7 +40,6 @@ jobs:
 
     - name: Tagging
       run: |
-        echo {{ secret.DOCKER_USERNAME }}
         export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
         export DOCKER_SERVICE=${{ secrets.DOCKER_SERVICE }}
         export SERVICE_CONFIGMAP=${{ secrets.SERVICE_CONFIGMAP }}
