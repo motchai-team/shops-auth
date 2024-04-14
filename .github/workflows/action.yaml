@@ -46,7 +46,7 @@ jobs:
         export GITHUB_SHA=${{ secrets.GITHUB_SHA }} > $GITHUB_SHA
 
         envsubst < ./deployments/prod.yaml > ./deployments/prod-tmp.yaml
-        echo ./deployments/prod-tmp.yaml
+        cat ./deployments/prod-tmp.yaml
 
     - name: Deploy
       uses: actions-hub/kubectl@master
