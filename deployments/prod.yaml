@@ -20,7 +20,7 @@ spec:
         - containerPort: 3000
         envFrom:
           - configMapRef:
-              name: $SERVICE_CONFIGMAP
+              name: ec-app-secret # $SERVICE_CONFIGMAP
 
 ---
 apiVersion: v1
