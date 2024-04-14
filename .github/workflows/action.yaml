@@ -40,12 +40,13 @@ jobs:
 
     - name: Tagging
       run: |
-        echo ${{ secrets.DOCKER_USERNAME }} >> $DOCKER_USERNAME
-        echo ${{ secrets.DOCKER_SERVICE }} >> $DOCKER_SERVICE
-        echo ${{ secrets.SERVICE_CONFIGMAP }} >> $SERVICE_CONFIGMAP
-        echo ${{ secrets.GITHUB_SHA }} > $GITHUB_SHA
+        export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+        export DOCKER_SERVICE=${{ secrets.DOCKER_SERVICE }}
+        export SERVICE_CONFIGMAP=${{ secrets.SERVICE_CONFIGMAP }}
+        export GITHUB_SHA=${{ secrets.GITHUB_SHA }} > $GITHUB_SHA
 
-        envsubst < ./deployments/prod.yaml >./deployments/prod-tmp.yaml
+        envsubst < ./deployments/prod.yaml > ./deployments/prod-tmp.yaml
+        echo ./deployments/prod-tmp.yaml
 
     - name: Deploy
       uses: actions-hub/kubectl@master
