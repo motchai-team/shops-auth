@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - name: auth-service
+        image: $DOCKER_USERNAME/$DOCKER_SERVICE:$GITHUB_SHA
+        ports:
+        - containerPort: 3000
+        envFrom:
+          - configMapRef:
+              name: $SERVICE_CONFIGMAP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-svc
+  namespace: default
+  labels:
+    app: auth-svc
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: auth
+
+
+
