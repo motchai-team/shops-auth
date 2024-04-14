@@ -14,7 +14,11 @@ CREATE TABLE public."account" (
     "gender" character varying,
     "created_at" timestamptz DEFAULT CURRENT_TIMESTAMP,
     "updated_at" timestamptz DEFAULT CURRENT_TIMESTAMP
-)
+);
+
+CREATE INDEX IF NOT EXISTS Account_username ON public."account" (username);
+CREATE INDEX IF NOT EXISTS Account_email ON public."account" (email);
+
 `);
     }
 
