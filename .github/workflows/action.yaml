@@ -38,14 +38,19 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_SERVICE }}:${{ github.sha }}
 
+    - name: Tagging
+      run: |
+        echo ${{ secrets.DOCKER_USERNAME }} >> $DOCKER_USERNAME
+        echo ${{ secrets.DOCKER_SERVICE }} >> $DOCKER_SERVICE
+        echo ${{ secrets.SERVICE_CONFIGMAP }} >> $SERVICE_CONFIGMAP
+        echo ${{ secrets.GITHUB_SHA }} > $GITHUB_SHA
+
+        envsubst < ./deployments/prod.yaml >./deployments/prod-tmp.yaml
+
     - name: Deploy
       uses: actions-hub/kubectl@master
       env:
         KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_SERVICE: ${{ secrets.DOCKER_SERVICE }}
-        SERVICE_CONFIGMAP: ${{ secrets.SERVICE_CONFIGMAP }}
-        GITHUB_SHA: ${{ github.sha }}
       with:
-        args: apply -f ./deployments/prod.yaml
+        args: apply -f ./deployments/prod-tmp.yaml
 
