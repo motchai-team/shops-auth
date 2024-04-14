@@ -40,10 +40,11 @@ jobs:
 
     - name: Tagging
       run: |
+        echo {{ secret.DOCKER_USERNAME }}
         export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
         export DOCKER_SERVICE=${{ secrets.DOCKER_SERVICE }}
         export SERVICE_CONFIGMAP=${{ secrets.SERVICE_CONFIGMAP }}
-        export GITHUB_SHA=${{ secrets.GITHUB_SHA }} > $GITHUB_SHA
+        export GITHUB_SHA=${{ github.sha }} > $GITHUB_SHA
 
         envsubst < ./deployments/prod.yaml > ./deployments/prod-tmp.yaml
         cat ./deployments/prod-tmp.yaml
