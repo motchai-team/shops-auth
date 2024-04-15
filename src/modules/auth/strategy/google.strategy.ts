@@ -18,7 +18,7 @@ export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
 
     async validate(_accessToken: string, _refreshToken: string, profile: Profile) {
         const { id, name, emails } = profile;
-        this.logger.log(`[Login] profile: ${profile}`);
+        this.logger.log(`[Login] profile: ${JSON.stringify(profile)}`);
 
         return {
             provider: 'google',
